@@ -50,11 +50,12 @@ def predict():
         # Reshape the numpy array as we are predicting for one data point
         input_data_reshaped = input_data_as_numpy_array.reshape(1, -1)
         
-        # Standardizing the input data exactly as in training
+       # Standardizing the input data exactly as in training
         input_data_std = scaler.transform(input_data_reshaped)
         
-        # Make prediction
-        prediction_prob = model.predict(input_data_std)
+        # 🚨 THE FIX 3: Convert to a raw tensor and bypass .predict() memory leak
+        input_tensor = tf.convert_to_tensor(input_data_std, dtype=tf.float32)
+        prediction_prob = model(input_tensor, training=False).numpy()
         
         # Get the max index (0 = Malignant, 1 = Benign based on sklearn dataset)
         predicted_class = int(np.argmax(prediction_prob[0]))
