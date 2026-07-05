@@ -13,6 +13,11 @@ SCALER_PATH = 'scaler.pkl'
 try:
     model = tf.keras.models.load_model(MODEL_PATH)
     scaler = joblib.load(SCALER_PATH)
+    
+    # 🚨 THE FIX: Delete the saved text names from the scaler so it stops crashing NumPy
+    if hasattr(scaler, 'feature_names_in_'):
+        delattr(scaler, 'feature_names_in_')
+        
     print("Model and Scaler loaded successfully.")
 except Exception as e:
     print(f"Error loading model or scaler. Ensure files exist in the root directory. Details: {e}")
@@ -34,19 +39,19 @@ def predict():
                 return jsonify({'success': False, 'error': f'Missing value for feature_{i}'}), 400
             feature_values.append(float(val))
             
-        # 1. Change input data to a numpy array
-        input_data_as_numpy_array = np.asarray(feature_values)
+        # 🚨 THE FIX 2: Explicitly force NumPy to treat this as an array of 64-bit floats
+        input_data_as_numpy_array = np.array(feature_values, dtype=np.float64)
         
-        # 2. Reshape the numpy array as we are predicting for one data point
+        # Reshape the numpy array as we are predicting for one data point
         input_data_reshaped = input_data_as_numpy_array.reshape(1, -1)
         
-        # 3. Standardizing the input data exactly as in training
+        # Standardizing the input data exactly as in training
         input_data_std = scaler.transform(input_data_reshaped)
         
-        # 4. Make prediction
+        # Make prediction
         prediction_prob = model.predict(input_data_std)
         
-        # 5. Get the max index (0 = Malignant, 1 = Benign based on sklearn dataset)
+        # Get the max index (0 = Malignant, 1 = Benign based on sklearn dataset)
         predicted_class = int(np.argmax(prediction_prob[0]))
         
         # Calculate confidences
