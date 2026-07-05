@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breast Cancer Prediction System | AI Diagnostics</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <header class="hero-section">
+        <div class="hero-content">
+            <div class="hero-badge">AI Healthcare</div>
+            <h1>Breast Cancer Prediction System</h1>
+            <p>Utilizing advanced Deep Learning and Neural Networks to assist in identifying benign and malignant breast tumors based on cytological features.</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="prediction-section card glass">
+            <div class="section-header">
+                <h2>Patient Diagnostic Data</h2>
+                <p>Enter the 30 cell nucleus features derived from the fine needle aspirate (FNA) digitized image.</p>
+            </div>
+
+            <form id="prediction-form">
+                <h3 class="group-title">Mean Features (1-10)</h3>
+                <div class="form-grid">
+                    <div class="input-group"><input type="number" step="any" name="feature_1" required id="f1"><label for="f1">Mean Radius</label></div>
+                    <div class="input-group"><input type="number" step="any" name="feature_2" required id="f2"><label for="f2">Mean Texture</label></div>
+                    <div class="input-group"><input type="number" step="any" name="feature_3" required id="f3"><label for="f3">Mean Perimeter</label></div>
+                    <div class="input-group"><input type="number" step="any" name="feature_4" required id="f4"><label for="f4">Mean Area</label></div>
+                    <div class="input-group"><input type="number" step="any" name="feature_5" required id="f5"><label for="f5">Mean Smoothness</label></div>
+                    <div class="input-group"><input type="number" step="any" name="feature_6" required id="f6"><label for="f6">Mean Compactness</label></div>
+                    <div class="input-group"><input type="number" step="any" name="feature_7" required id="f7"><label for="f7">Mean Concavity</label></div>
+                    <div class="input-group"><input type="number" step="any" name="feature_8" required id="f8"><label for="f8">Mean Concave Points</label></div>
+                    <div class="input-group"><input type="number" step="any" name="feature_9" required id="f9"><label for="f9">Mean Symmetry</label></div>
+                    <div class="input-group"><input type="number" step="any" name="feature_10" required id="f10"><label for="f10">Mean Fractal Dim.</label></div>
+                </div>
+
+                <h3 class="group-title">Standard Error Features (11-20)</h3>
+                <div class="form-grid">
+                    <div class="input-group"><input type="number" step="any" name="feature_11" required id="f11"><label for="f11">Radius Error</label></div>
+                    <div class="input-group"><input type="number" step="any" name="feature_12" required id="f12"><label for="f12">Texture Error</label></div>
+                    <div class="input-group"><input type="number" step="any" name="feature_13" required id="f13"><label for="f13">Perimeter Error</label></div>
+                    <div class="input-group"><input type="number" step="any" name="feature_14" required id="f14"><label for="f14">Area Error</label></div>
+                    <div class="input-group"><input type="number" step="any" name="feature_15" required id="f15"><label for="f15">Smoothness Error</label></div>
+                    <div class="input-group"><input type="number" step="any" name="feature_16" required id="f16"><label for="f16">Compactness Error</label></div>
+                    <div class="input-group"><input type="number" step="any" name="feature_17" required id="f17"><label for="f17">Concavity Error</label></div>
+                    <div class="input-group"><input type="number" step="any" name="feature_18" required id="f18"><label for="f18">Concave Points Error</label></div>
+                    <div class="input-group"><input type="number" step="any" name="feature_19" required id="f19"><label for="f19">Symmetry Error</label></div>
+                    <div class="input-group"><input type="number" step="any" name="feature_20" required id="f20"><label for="f20">Fractal Dim. Error</label></div>
+                </div>
+
+                <h3 class="group-title">Worst/Largest Features (21-30)</h3>
+                <div class="form-grid">
+                    <div class="input-group"><input type="number" step="any" name="feature_21" required id="f21"><label for="f21">Worst Radius</label></div>
+                    <div class="input-group"><input type="number" step="any" name="feature_22" required id="f22"><label for="f22">Worst Texture</label></div>
+                    <div class="input-group"><input type="number" step="any" name="feature_23" required id="f23"><label for="f23">Worst Perimeter</label></div>
+                    <div class="input-group"><input type="number" step="any" name="feature_24" required id="f24"><label for="f24">Worst Area</label></div>
+                    <div class="input-group"><input type="number" step="any" name="feature_25" required id="f25"><label for="f25">Worst Smoothness</label></div>
+                    <div class="input-group"><input type="number" step="any" name="feature_26" required id="f26"><label for="f26">Worst Compactness</label></div>
+                    <div class="input-group"><input type="number" step="any" name="feature_27" required id="f27"><label for="f27">Worst Concavity</label></div>
+                    <div class="input-group"><input type="number" step="any" name="feature_28" required id="f28"><label for="f28">Worst Concave Pts.</label></div>
+                    <div class="input-group"><input type="number" step="any" name="feature_29" required id="f29"><label for="f29">Worst Symmetry</label></div>
+                    <div class="input-group"><input type="number" step="any" name="feature_30" required id="f30"><label for="f30">Worst Fractal Dim.</label></div>
+                </div>
+
+                <div class="actions">
+                    <button type="submit" id="submit-btn" class="btn-primary">
+                        <span class="btn-text">Run Neural Network Analysis</span>
+                        <div class="loader hidden"></div>
+                    </button>
+                    <button type="button" id="fill-sample" class="btn-secondary">Load Sample Data</button>
+                </div>
+            </form>
+        </section>
+
+        <section id="result-section" class="result-section card glass hidden">
+            <div class="result-header">
+                <h2>Analysis Complete</h2>
+            </div>
+            <div id="result-content" class="result-content">
+                <div id="status-badge" class="status-badge"></div>
+                
+                <div class="confidence-container">
+                    <div class="prob-row">
+                        <span>Probability (Benign)</span>
+                        <span id="prob-benign-text">0%</span>
+                    </div>
+                    <div class="progress-bar-bg"><div id="prob-benign-bar" class="progress-bar benign-bar"></div></div>
+                    
+                    <div class="prob-row">
+                        <span>Probability (Malignant)</span>
+                        <span id="prob-malignant-text">0%</span>
+                    </div>
+                    <div class="progress-bar-bg"><div id="prob-malignant-bar" class="progress-bar malignant-bar"></div></div>
+                </div>
+                
+                <p id="recommendation-text" class="recommendation"></p>
+                <button id="reset-btn" class="btn-secondary outline mt-20">Analyze Another Patient</button>
+            </div>
+        </section>
+
+        <section class="info-grid">
+            <div class="card glass">
+                <h3>System Architecture</h3>
+                <p>This platform is powered by a multi-layer Neural Network built with TensorFlow & Keras. Data is preprocessed using Scikit-Learn's StandardScaler to ensure statistical distribution matches the training environment precisely.</p>
+            </div>
+            <div class="card glass">
+                <h3>Clinical Note</h3>
+                <p>Early detection significantly increases treatment success rates. This AI tool is designed to augment clinical decision-making, not replace professional histopathological analysis.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Engineered with Flask & TensorFlow | Premium Healthcare AI Solutions</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
