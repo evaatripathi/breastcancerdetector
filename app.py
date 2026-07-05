@@ -1,12 +1,13 @@
 from flask import Flask, render_template, request, jsonify
 import numpy as np
+import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 os.environ['OMP_NUM_THREADS'] = '1'
 os.environ['TF_NUM_INTRAOP_THREADS'] = '1'
 os.environ['TF_NUM_INTEROP_THREADS'] = '1'
 import tensorflow as tf
 import joblib
-import os
+
 
 app = Flask(__name__)
 
